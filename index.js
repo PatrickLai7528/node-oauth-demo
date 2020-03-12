@@ -3,7 +3,7 @@
 const clientID = "Iv1.61514a0dc0e75d1e";
 const clientSecret = "5684cf24b2dc1613c82e1c1c11fb3a9ac6abcf3c";
 
-const GithubWebhookHandler = require("koa-github-webhook-handler")
+const GithubWebhookHandler = require("koa-github-webhook-handler");
 const Koa = require("koa");
 const path = require("path");
 const serve = require("koa-static");
@@ -14,7 +14,7 @@ const app = new Koa();
 
 const main = serve(path.join(__dirname + "/public"));
 
-const githubWebhookHandler = new GithubWebhookHandler({
+const githubWebhookHandler = new (GithubWebhookHandler.default)({
 	path: "/github/webhooks",
 	secret: "myhashsecret"
 });
