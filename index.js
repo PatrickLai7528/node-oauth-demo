@@ -2,8 +2,8 @@
 // while registering the application
 const clientID = "Iv1.61514a0dc0e75d1e";
 const clientSecret = "5684cf24b2dc1613c82e1c1c11fb3a9ac6abcf3c";
-import GithubWebhookHandler from 'koa-github-webhook-handler';
 
+const GithubWebhookHandler = require("koa-github-webhook-handler")
 const Koa = require("koa");
 const path = require("path");
 const serve = require("koa-static");
