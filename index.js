@@ -13,6 +13,20 @@ const app = new Koa();
 
 const main = serve(path.join(__dirname + "/public"));
 
+const githubWebhookHandler = new GithubWebhookHandler({
+	path: "/github/webhooks",
+	secret: "myhashsecret"
+});
+
+githubWebhookHandler.on("push", event => {
+	console.log(
+		"Received a push event for %s to %s",
+		event.payload.repository.name,
+		event.payload.ref
+	);
+	console.log(event);
+});
+
 const oauth = async ctx => {
 	const requestToken = ctx.request.query.code;
 	console.log("authorization code:", requestToken);
@@ -46,14 +60,8 @@ const oauth = async ctx => {
 	ctx.response.redirect(`/welcome.html?name=${name}`);
 };
 
-const webhook = async ctx => {
-	ctx.request.on("push", function(e) {
-		console.log(e);
-	});
-};
-
 app.use(main);
 app.use(route.get("/oauth/redirect", oauth));
-app.use(route.post("/github/webhooks", webhook));
+app.use(githubWebhookHandler.middleware());
 
 app.listen(3000);
