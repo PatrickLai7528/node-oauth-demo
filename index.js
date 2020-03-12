@@ -47,7 +47,7 @@ const oauth = async ctx => {
 };
 
 const webhook = async ctx => {
-	console.log(ctx.request);
+	console.log(ctx.request.body);
 };
 
 app.use(main);
